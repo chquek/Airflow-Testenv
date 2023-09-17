@@ -1,0 +1,19 @@
+
+Test Environment folder /home/testenv :
+
+  Start : docker-compose up -d
+  Stop : docker-compose down
+
+  Logs on db2 , mysql_ssql , mysql_nossql , http : docker-compose logs -f [container]-[db2]
+  Edit YAML : vi docker-compose.yaml
+
+Verify :
+
+  DB2 : docker exec testenv_db2_1 su - db2inst1 -c "db2 connect to sample ; db2 'select * from employee'"
+  MySQL non-ssl : docker exec -it testenv_mysql_nossl_1 bash -c "echo 'select * from movies' | mysql -u root -pmysqlinst sandy"
+  MySQL ssl : docker exec -it testenv_mysql_ssl_1 bash -c "echo 'select * from movies' | mysql -u root -pmysqlinst sandy"
+  Postgres on carmen : docker exec designer_postgres_1 bash -c "echo '\l' | psql -U airflow -d airflow"
+  Postgres on production : docker exec kinisi_postgres_1 bash -c "echo '\l' | psql -U airflow -d airflow"
+
+Copy to cuclone:/home/testenv: ./docp.sh
+

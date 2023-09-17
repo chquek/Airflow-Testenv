@@ -1,0 +1,48 @@
+version: '3.1'
+
+services:
+
+  # https://hub.docker.com/r/ibmcom/db2 , DB2 test environment
+  db2 :
+    image: ibmcom/db2
+    hostname : db2host
+    environment:
+      LICENSE: accept
+      DBNAME : testdb
+      SAMPLEDB : "true"
+      DB2INST1_PASSWORD: db2inst1
+    privileged : true
+    volumes:
+      - ./DB2/scripts:/var/custom
+
+  http :
+    build:
+      context: .
+      dockerfile: restapi/dockerfile
+    image: "httpapi"
+    command : python3 app.py
+
+  # MySQL test environment
+  mysql_nossl :
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: sandy
+      MYSQL_ROOT_PASSWORD: mysqlinst
+    volumes:
+      - ./mysql/nossl/scripts/init1.sql:/docker-entrypoint-initdb.d/init1.sql
+
+  mysql_ssl :
+    image: cyprien/mysql-tls:5.7
+    environment:
+      MYSQL_DATABASE: sandy
+      MYSQL_ROOT_PASSWORD: mysqlinst
+    working_dir : /scripts
+    volumes:
+      - ./mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+      - ./mysql/ssl/data:/var/lib/mysql
+      - ./mysql/ssl/init1.sql:/docker-entrypoint-initdb.d/init1.sql
+
+networks:
+  default:
+    external:
+      name: kinisi-net
