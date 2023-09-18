@@ -9,7 +9,7 @@ This repo is to suppose to go hand in hand with [Airflow-UI](https://github.com/
 
 docker-compose up -d
 
-This may take a while.  DB2 takes quite a while to initialise. 
+This may take a while.  DB2 takes quite some time to initialise. 
 
 Test if data sources is ready for use with the following commands :
 
