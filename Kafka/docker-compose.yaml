@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    build: .
+    ports:
+      - 9092:9092
+    environment:
+      DOCKER_API_VERSION : 1.22
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  python : 
+    image : python:3.8-alpine
+    volumes : 
+      - ./py:/py
+    environment:
+      PYTHONUNBUFFERED : 1
+    command : 
+      - sh 
+      - -c
+      - |
+        pip install kafka-python
+        tail -f /dev/null
+
+networks:
+  default:
+    external:
+      name: kinisi-net
