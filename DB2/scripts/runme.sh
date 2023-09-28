@@ -27,6 +27,10 @@ echo Output of runme
 
 db2pd -
 
+db2 update dbm cfg using SSL_SVR_KEYDB /keystore/mydbserver.kdb
+db2 update dbm cfg using SSL_SVR_STASH /keystore/mydbserver.sth
+db2 update dbm cfg using SSL_SVR_LABEL myselfsigned
+db2 update dbm cfg using SSL_SVCENAME 60002
 
 db2stop
 
