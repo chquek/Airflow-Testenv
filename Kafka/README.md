@@ -1,7 +1,7 @@
 
 # Intro
 
-This is a self contained test environment for a Kafka environment.   It uses files from the following git to create my test image.
+This is a self contained test environment for Kafka topics.   It uses files from the following git to create my test image.
 
 - https://github.com/wurstmeister/kafka-docker.git.
 
@@ -22,5 +22,5 @@ $CMD py/consumer.py test-topic user1 | consume messages in test-topic as user1
 
 Consumer :
 
-earliest :  start reading from 1st message
-latest : start reading from end of queue
+- earliest :  start reading from 1st message
+- latest : start reading from end of queue
