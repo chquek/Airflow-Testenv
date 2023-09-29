@@ -13,7 +13,7 @@ services:
       DB2INST1_PASSWORD: db2inst1
     privileged : true
     volumes:
-      - ./DB2/data:/database
+      - ./DB2/config:/database/config
       - ./DB2/keystore:/keystore
       - ./DB2/scripts:/var/custom
 
