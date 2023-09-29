@@ -24,3 +24,45 @@ Consumer :
 
 - earliest :  start reading from 1st message
 - latest : start reading from end of queue
+
+
+## Use with Airflow
+
+### connection id - kinisi-kafka
+```
+{
+  "bootstrap.servers": "ubuntu:9092",
+  "group.id": "aaa"
+}
+```
+
+### DAG
+
+Kafka.py to read/write
+
+
+``` python
+import json
+
+def producer():
+  print ("Producer called" )
+  for i in range(20):
+    yield (json.dumps( { 'k' : i }) , json.dumps( { 'v' : i + 1 } ))
+
+
+# append the message to the data pointer
+def consumer(message, prefix=None , dataptr=[] ):
+  key = message.key().decode('utf-8')
+  value = json.loads( message.value().decode('utf-8') )
+  print (f"CONSUMER : {prefix} {message.topic()} @ {message.offset()}; {key} : {value}")
+  dataptr.append(value)
+
+```
+
+### Tasks
+
+create task to write to topic test-connection, and read from topic test-consumer.  In the host that is running the docker , run the following to keep writing rows to the topic :
+
+
+CMD="docker exec -it kafka_python_1 python3" 
+$CMD py/producer.py test-consumer
