@@ -2,8 +2,9 @@ from kafka import KafkaConsumer , TopicPartition
 from json import loads
 import sys
 
-TOPIC = sys.argv[1]
-GROUP = sys.argv[2]
+BSS   = sys.argv[1]
+TOPIC = sys.argv[2]
+GROUP = sys.argv[3]
 
 consumer = KafkaConsumer(
     TOPIC ,
@@ -11,7 +12,7 @@ consumer = KafkaConsumer(
     auto_offset_reset='earliest',
     enable_auto_commit=True,
     value_deserializer=lambda m: loads(m.decode('utf-8')),
-    bootstrap_servers=['kafka:9092'] )
+    bootstrap_servers=[ BSS ] )
 
 print ("consumer = ", dir(consumer) )
 print ("\n\n")

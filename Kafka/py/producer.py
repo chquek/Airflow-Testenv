@@ -6,14 +6,15 @@ from datetime import datetime
 
 import sys
 
-TOPIC=sys.argv[1]
+BSS   = sys.argv[1]
+TOPIC = sys.argv[2]
+
 start=1000
 
 def serialize(m) :
     return dumps(m).encode('utf-8')
 
-# producer = KafkaProducer( value_serializer=lambda m: dumps(m).encode('utf-8'), bootstrap_servers=['localhost:9092'] )
-producer = KafkaProducer( value_serializer=serialize , bootstrap_servers=['kafka:9092'] )
+producer = KafkaProducer( value_serializer=serialize , bootstrap_servers=[ BSS ]  )
 
 
 for e in range(1000000):
@@ -26,7 +27,8 @@ for e in range(1000000):
 
     data = { 'ts' : ts , 'value' : f"message for value {e} - {e + start}" }
     producer.send( TOPIC , value=data , key = b"partnkey" )
-    print ( f"TOPIC = {TOPIC} , Data={data}" )
+    print ( f"BSS = {BSS} TOPIC = {TOPIC} , Data={data}" )
     sleep(1)
 
+print ("Exitting") 
 sys.exit(0)
