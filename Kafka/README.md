@@ -64,5 +64,5 @@ def consumer(message, prefix=None , dataptr=[] ):
 create task to write to topic test-connection, and read from topic test-consumer.  In the host that is running the docker , run the following to keep writing rows to the topic :
 
 
-CMD="docker exec -it kafka_python_1 python3" 
-$CMD py/producer.py test-consumer
+- CMD="docker exec -it kafka_python_1 python3" 
+- $CMD py/producer.py kafka test-consumer
