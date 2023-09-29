@@ -28,10 +28,12 @@ Consumer :
 
 ## Use with Airflow
 
+Set kafka in /etc/hosts to address of boostrap server.
+
 ### connection id - kinisi-kafka
 ```
 {
-  "bootstrap.servers": "ubuntu:9092",
+  "bootstrap.servers": "kafka:9092",
   "group.id": "aaa"
 }
 ```
