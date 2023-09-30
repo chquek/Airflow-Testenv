@@ -4,12 +4,21 @@
 
 This repo is to suppose to go hand in hand with [Airflow-UI](https://github.com/chquek/Airflow-UI).
 
+## Set up
 
-## Run
+- apt update
+- apt install docker -y
+- apt install docker-compose -y
+- docker network create kinisi-net ( this step is necessary because the test environment and UI s on the same cluster )
+
+## Usage
 
 docker-compose up -d
 
 This may take a while.  DB2 takes quite some time to initialise. 
+
+
+## Monitor
 
 Test if data sources is ready for use with the following commands :
 
@@ -21,9 +30,11 @@ MySQL ssl | docker exec -it airflow-testenv_mysql_ssl_1 bash -c "echo 'select * 
 REST server | docker exec -it airflow-testenv_mysql_nossl_1 bash -c "curl http://http:7654/dummy" |
 Postgres | docker exec airflow-ui_postgres_1 bash -c "echo '\l' \| psql -U airflow -d airflow" | requires Airflow-UI to be running 
 
+When the docker exec returns rows - this mean the datasource is ready.
+
 ## Monitor DB2
 
-Use this command to examine the logs :  docker-compose logs -f db2
+DB2 takes a much longer time to initialise.  Use this command to examine the logs :  docker-compose logs -f db2
 
 DB2 is ready when the log shows following :
 
